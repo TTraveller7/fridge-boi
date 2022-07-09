@@ -24,6 +24,10 @@ public class Food {
     @Enumerated(EnumType.STRING)
     private FoodState foodState;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
+
     public Food() {
 
     }
@@ -36,6 +40,7 @@ public class Food {
                 .append("amount", amount)
                 .append("bestBeforeDate", bestBeforeDate)
                 .append("foodState", foodState)
+                .append("category", category)
                 .toString();
     }
 
@@ -77,5 +82,13 @@ public class Food {
 
     public void setFoodState(FoodState foodState) {
         this.foodState = foodState;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
