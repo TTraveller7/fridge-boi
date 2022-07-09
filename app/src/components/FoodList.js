@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Food from './Food';
 import FoodForm from './FoodForm';
+import Row from 'react-bootstrap/Row'
 
 function FoodList() {
   const [foods, setFoods] = useState([]);
@@ -42,16 +43,20 @@ function FoodList() {
   };
 
   return ( 
-    <div>
-      <h1>What's the Food you purchased today?</h1>
-      <FoodForm onSubmit={addFood}/>
-      <Food 
-        foods={foods}
-        finishFood={finishFood}
-        removeFood={removeFood}
-        updateFood={updateFood}
-      />
-    </div>
+    <React.Fragment>
+      <Row className="mt-4 mx-2" as="h2">Bought anything interesting?</Row>
+      <Row className="mt-4">
+        <FoodForm onSubmit={addFood}/>
+      </Row>
+      <Row className="mt-4">
+        <Food 
+          foods={foods}
+          finishFood={finishFood}
+          removeFood={removeFood}
+          updateFood={updateFood}
+        />
+      </Row>
+    </React.Fragment>
   );
 }
 
