@@ -2,6 +2,7 @@ import './App.css';
 import FoodList from './components/FoodList';
 import { useState, useEffect } from 'react';
 import http from './http-common';
+import SearchBar from './components/SearchBar';
 
 function App() {
   const [foods, setFoods] = useState([]);
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <div className="fridge-boi">
+      <SearchBar />
       <FoodList />
     </div>
   );
