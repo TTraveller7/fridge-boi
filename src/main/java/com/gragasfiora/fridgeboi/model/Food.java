@@ -20,6 +20,10 @@ public class Food {
     @Column
     private LocalDate bestBeforeDate;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private FoodState foodState;
+
     public Food() {
 
     }
@@ -31,6 +35,7 @@ public class Food {
                 .append("description", description)
                 .append("amount", amount)
                 .append("bestBeforeDate", bestBeforeDate)
+                .append("foodState", foodState)
                 .toString();
     }
 
@@ -64,5 +69,13 @@ public class Food {
 
     public void setBestBeforeDate(LocalDate localDateTime) {
         this.bestBeforeDate = localDateTime;
+    }
+
+    public FoodState getFoodState() {
+        return foodState;
+    }
+
+    public void setFoodState(FoodState foodState) {
+        this.foodState = foodState;
     }
 }
