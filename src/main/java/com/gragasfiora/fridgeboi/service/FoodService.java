@@ -8,4 +8,10 @@ public interface FoodService {
     Food findFoodById(Long id);
 
     List<Food> findAll();
+
+    Food save(Food food);
+
+    void deleteById(Long id);
+
+    Food replaceOrSave(Long id, Food newFood);
 }

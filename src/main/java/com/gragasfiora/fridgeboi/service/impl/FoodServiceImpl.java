@@ -33,4 +33,20 @@ public class FoodServiceImpl implements FoodService {
 
         return foods;
     }
+
+    @Override
+    public Food save(Food food) {
+        return foodRepository.save(food);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        foodRepository.deleteById(id);
+    }
+
+    @Override
+    public Food replaceOrSave(Long id, Food newFood) {
+        newFood.setId(id);
+        return foodRepository.save(newFood);
+    }
 }
