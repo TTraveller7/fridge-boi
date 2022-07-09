@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
 
 function FoodForm(props) {
-  const [input, setInput] = useState('');
-  const [time, setTime] = useState('');
+  const [input, setInput] = useState(props.edit ? props.edit.value : '');
+  const [time, setTime] = useState(props.edit ? props.edit.time : '');
+  var today = new Date();
+  const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
   const handleChange = e => {
     setInput(e.target.value);
+    
+
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-
-    var today = new Date();
-    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-
+    
     setTime(date);
-    console.log(time);
 
     props.onSubmit({
       id: Math.floor(Math.random() * 10000),

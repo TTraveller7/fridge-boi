@@ -39,7 +39,7 @@ function Food({foods, finishFood, removeFood, updateFood}) {
           onClick={() => removeFood(food.id)}
           className='delete-icon' />
           <TiEdit 
-          onClick={() => setEdit({ id: food.id, value:  food.text })}
+          onClick={() => setEdit({ id: food.id, value:  food.text, time: food.time })}
           className='edit-icon'/>
         </div>
     </div>
