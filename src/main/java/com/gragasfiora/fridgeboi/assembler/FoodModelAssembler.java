@@ -2,7 +2,6 @@ package com.gragasfiora.fridgeboi.assembler;
 
 import com.gragasfiora.fridgeboi.controller.FoodController;
 import com.gragasfiora.fridgeboi.model.Food;
-import com.gragasfiora.fridgeboi.model.FoodState;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
@@ -17,12 +16,10 @@ public class FoodModelAssembler implements RepresentationModelAssembler<Food, En
         String idString = entity.getId().toString();
         EntityModel<Food> entityModel = EntityModel.of(entity)
                 .add(linkTo(methodOn(FoodController.class).one(idString)).withSelfRel())
-                .add(linkTo(methodOn(FoodController.class).all()).withRel("foods"));
-
-        if (entity.getFoodState() == FoodState.STORED) {
-            entityModel.add(linkTo(methodOn(FoodController.class).finishFood(idString)).withRel("finish"))
-                    .add(linkTo(methodOn(FoodController.class).throwFood(idString)).withRel("delete"));
-        }
+                .add(linkTo(methodOn(FoodController.class).all()).withRel("foods"))
+                .add(linkTo(methodOn(FoodController.class).finishFood(idString)).withRel("finish"))
+                .add(linkTo(methodOn(FoodController.class).throwFood(idString)).withRel("delete"))
+                .add(linkTo(methodOn(FoodController.class).storeFood(idString)).withRel("store"));
 
         return entityModel;
     }

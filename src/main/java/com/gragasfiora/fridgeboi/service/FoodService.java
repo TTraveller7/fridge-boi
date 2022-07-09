@@ -19,4 +19,6 @@ public interface FoodService {
     Food finishFoodById(Long id);
 
     Food throwFoodById(Long id);
+
+    Food storeFoodById(Long id);
 }

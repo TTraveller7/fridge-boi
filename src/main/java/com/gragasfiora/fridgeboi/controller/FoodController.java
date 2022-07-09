@@ -76,4 +76,10 @@ public class FoodController {
         Food food = foodService.throwFoodById(Long.valueOf(id));
         return foodModelAssembler.toModel(food);
     }
+
+    @GetMapping("/foods/{id}/store")
+    public EntityModel<Food> storeFood(@PathVariable String id) {
+        Food food = foodService.storeFoodById(Long.valueOf(id));
+        return foodModelAssembler.toModel(food);
+    }
 }
