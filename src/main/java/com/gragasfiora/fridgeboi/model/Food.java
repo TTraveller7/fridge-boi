@@ -1,7 +1,7 @@
 package com.gragasfiora.fridgeboi.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -18,7 +18,7 @@ public class Food {
     private Integer amount;
 
     @Column
-    private LocalDateTime localDateTime;
+    private LocalDate bestBeforeDate;
 
     public Food() {
 
@@ -30,7 +30,7 @@ public class Food {
                 .append("id", id)
                 .append("description", description)
                 .append("amount", amount)
-                .append("localDateTime", localDateTime)
+                .append("bestBeforeDate", bestBeforeDate)
                 .toString();
     }
 
@@ -58,11 +58,11 @@ public class Food {
         this.amount = amount;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public LocalDate getBestBeforeDate() {
+        return bestBeforeDate;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setBestBeforeDate(LocalDate localDateTime) {
+        this.bestBeforeDate = localDateTime;
     }
 }
