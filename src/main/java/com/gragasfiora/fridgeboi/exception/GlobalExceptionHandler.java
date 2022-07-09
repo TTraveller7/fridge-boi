@@ -9,7 +9,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(FoodNotFoundException.class)
-    public String handelFoodNotFound(FoodNotFoundException foodNotFoundException) {
-        return foodNotFoundException.getMessage();
+    public String handelFoodNotFound(FoodNotFoundException e) {
+        return e.getMessage() + "\n";
+    }
+
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ExceptionHandler(IllegalFoodStateTransitionException.class)
+    public String handelIllegalFoodStateTransition(IllegalFoodStateTransitionException e) {
+        return e.getMessage() + "\n";
     }
 }
