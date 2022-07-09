@@ -1,6 +1,7 @@
 package com.gragasfiora.fridgeboi.service;
 
 import com.gragasfiora.fridgeboi.model.Food;
+import com.gragasfiora.fridgeboi.model.FoodState;
 
 import java.util.List;
 
@@ -14,4 +15,8 @@ public interface FoodService {
     void deleteById(Long id);
 
     Food replaceOrSave(Long id, Food newFood);
+
+    Food finishFoodById(Long id);
+
+    Food throwFoodById(Long id);
 }

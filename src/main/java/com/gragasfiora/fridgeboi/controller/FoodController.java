@@ -27,6 +27,7 @@ public class FoodController {
         this.foodModelAssembler = foodModelAssembler;
     }
 
+    // aggregate root
     @GetMapping("/foods")
     public CollectionModel<EntityModel<Food>> all() {
         List<EntityModel<Food>> foodModels = foodService.findAll().stream()
@@ -37,6 +38,7 @@ public class FoodController {
                 .add(linkTo(methodOn(FoodController.class).all()).withSelfRel());
     }
 
+    // single object
     @GetMapping("/foods/{id}")
     public EntityModel<Food> one(@PathVariable String id) {
         Food food = foodService.findFoodById(Long.valueOf(id));
@@ -59,5 +61,18 @@ public class FoodController {
     @DeleteMapping("/foods/{id}")
     public void deleteFood(@PathVariable String id) {
         foodService.deleteById(Long.valueOf(id));
+    }
+
+    // handle state transition
+    @GetMapping("/foods/{id}/finish")
+    public EntityModel<Food> finishFood(@PathVariable String id) {
+        Food food = foodService.finishFoodById(Long.valueOf(id));
+        return foodModelAssembler.toModel(food);
+    }
+
+    @GetMapping("/foods/{id}/throw")
+    public EntityModel<Food> throwFood(@PathVariable String id) {
+        Food food = foodService.throwFoodById(Long.valueOf(id));
+        return foodModelAssembler.toModel(food);
     }
 }

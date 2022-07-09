@@ -1,7 +1,9 @@
 package com.gragasfiora.fridgeboi.service.impl;
 
 import com.gragasfiora.fridgeboi.exception.FoodNotFoundException;
+import com.gragasfiora.fridgeboi.exception.IllegalFoodStateTransitionException;
 import com.gragasfiora.fridgeboi.model.Food;
+import com.gragasfiora.fridgeboi.model.FoodState;
 import com.gragasfiora.fridgeboi.repository.FoodRepository;
 import com.gragasfiora.fridgeboi.service.FoodService;
 import org.springframework.stereotype.Service;
@@ -48,5 +50,27 @@ public class FoodServiceImpl implements FoodService {
     public Food replaceOrSave(Long id, Food newFood) {
         newFood.setId(id);
         return foodRepository.save(newFood);
+    }
+
+    @Override
+    public Food finishFoodById(Long id) {
+        Food food = findFoodById(id);
+        if (food.getFoodState() != FoodState.STORED) {
+            throw new IllegalFoodStateTransitionException(food.getFoodState(), FoodState.FINISHED);
+        }
+
+        food.setFoodState(FoodState.FINISHED);
+        return save(food);
+    }
+
+    @Override
+    public Food throwFoodById(Long id) {
+        Food food = findFoodById(id);
+        if (food.getFoodState() != FoodState.STORED) {
+            throw new IllegalFoodStateTransitionException(food.getFoodState(), FoodState.THROWN);
+        }
+
+        food.setFoodState(FoodState.THROWN);
+        return save(food);
     }
 }
