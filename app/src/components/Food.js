@@ -6,14 +6,16 @@ import {TiEdit} from 'react-icons/ti';
 function Food({foods, finishFood, removeFood, updateFood}) {
   const [edit, setEdit] = useState({
     id: null,
-    value: ''
+    value: '',
+    time: ''
   });
 
   const submitUpdate = value => {
     updateFood(edit.id, value);
     setEdit({
       id: null,
-      value: ''
+      value: '',
+      time: ''
     })
   }
 
@@ -28,6 +30,9 @@ function Food({foods, finishFood, removeFood, updateFood}) {
     >
         <div key={food.id} onClick={() => finishFood(food.id)}>
           {food.text}
+        </div>
+        <div>
+          {food.time}
         </div>
         <div className='icon'>
           <RiCloseCircleLine

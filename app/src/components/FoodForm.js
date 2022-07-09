@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 function FoodForm(props) {
   const [input, setInput] = useState('');
+  const [time, setTime] = useState('');
 
   const handleChange = e => {
     setInput(e.target.value);
@@ -10,9 +11,16 @@ function FoodForm(props) {
   const handleSubmit = e => {
     e.preventDefault();
 
+    var today = new Date();
+    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+    setTime(date);
+    console.log(time);
+
     props.onSubmit({
       id: Math.floor(Math.random() * 10000),
-      text: input
+      text: input,
+      time: time
     });
 
     setInput('');
