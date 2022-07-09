@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 
 function FoodForm(props) {
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState('');
 
   const handleChange = e => {
-    setInput(e.target.value)
-  }
+    setInput(e.target.value);
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -13,10 +13,10 @@ function FoodForm(props) {
     props.onSubmit({
       id: Math.floor(Math.random() * 10000),
       text: input
-    })
+    });
 
-    setInput('')
-  }
+    setInput('');
+  };
 
   return (
     <form className="food-form" onSubmit={handleSubmit}>
@@ -29,7 +29,7 @@ function FoodForm(props) {
         onChange={handleChange} />
       <button className='food-input'>Add food purchased</button>
     </form>
-  )
+  );
 }
 
-export default FoodForm
+export default FoodForm;
