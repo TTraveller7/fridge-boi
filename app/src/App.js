@@ -5,6 +5,7 @@ import http from './http-common';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import SearchBar from './components/SearchBar';
 
 function App() {
   const [foods, setFoods] = useState([]);
@@ -29,6 +30,9 @@ function App() {
 
   return (
     <Container>
+      <Row>
+        <SearchBar />
+      </Row>
       <Row>
         <Col md={{span: 8, offset: 2}}>
           <FoodList />
