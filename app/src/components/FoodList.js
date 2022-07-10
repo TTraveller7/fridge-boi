@@ -6,7 +6,9 @@ import http from '../http-common';
 
 function FoodList() {
   const [foods, setFoods] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [dummy, setDummy] = useState(false);
   
   useEffect(() => {
     setLoading(true);
@@ -23,21 +25,47 @@ function FoodList() {
       }
     }
     getData();
+  }, [dummy]);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const getData = async () => {
+      try {
+        const response = await http.get('/categories');
+        console.log(response.data._embedded.categoryList);
+        setCategories(response.data._embedded.categoryList);
+      } catch (err) {
+        console.log(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getData();
   }, []);
 
   const addFood = food => {
-    if(!food.text || /^\s*$/.test(food.text)) {
+    console.log(food);
+
+    if(!food.description || /^\s*$/.test(food.description)) {
       return; 
     }
     
     http.post('/foods', food)
-      .then(response => console.log(response));
+      .then(response => {
+        console.log(response)
+      }).then(
+        () => setDummy(!dummy)
+      );
   };
 
   const removeFood = id => {
-    const removeArr = [...foods].filter(food => food.id !== id);
-
-    setFoods(removeArr);
+    http.delete('/foods/' + id)      
+      .then(response => {
+      console.log(response)
+    }).then(
+      () => setDummy(!dummy)
+    );
   };
 
   const updateFood = (foodId, newValue) => {
@@ -65,7 +93,7 @@ function FoodList() {
     <React.Fragment>
       <Row className="mt-4 mx-2" as="h2">Bought anything interesting?</Row>
       <Row className="mt-4">
-        <FoodForm onSubmit={addFood}/>
+        <FoodForm onSubmit={addFood} categories={categories}/>
       </Row>
       <Row className="mt-4">
         <Food 

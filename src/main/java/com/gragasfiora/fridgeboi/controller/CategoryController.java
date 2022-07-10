@@ -2,14 +2,10 @@ package com.gragasfiora.fridgeboi.controller;
 
 import com.gragasfiora.fridgeboi.assembler.CategoryModelAssembler;
 import com.gragasfiora.fridgeboi.model.Category;
-import com.gragasfiora.fridgeboi.model.Food;
 import com.gragasfiora.fridgeboi.service.CategoryService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +14,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("/api")
 public class CategoryController {
 

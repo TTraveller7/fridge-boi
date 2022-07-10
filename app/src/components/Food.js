@@ -4,6 +4,7 @@ import {RiCloseCircleLine} from 'react-icons/ri';
 import {TiEdit} from 'react-icons/ti';
 import Table from 'react-bootstrap/Table'
 import { addDays } from '@progress/kendo-date-math';
+import formatDate from '../utils/DateFormatter';
 
 function Food({foods, finishFood, removeFood, updateFood}) {
   console.log(foods);
@@ -24,20 +25,6 @@ function Food({foods, finishFood, removeFood, updateFood}) {
       time: ''
     })
   }
-
-  const formatDate = date => {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-}
 
   const getBestBeforeDate = food => {
     const startDate = new Date(food.startStoreDate);
@@ -75,9 +62,9 @@ function Food({foods, finishFood, removeFood, updateFood}) {
               onClick={() => removeFood(food.id)}
               className='delete-icon'
               />
-              <TiEdit 
+              {/* <TiEdit 
               onClick={() => setEdit({ id: food.id, value:  food.text, category: food.category, time: food.time })}
-              className='edit-icon'/>
+              className='edit-icon'/> */}
             </td>
           </tr>
         ))}     

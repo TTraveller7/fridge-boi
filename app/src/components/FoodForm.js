@@ -1,69 +1,18 @@
 import React, {useState} from 'react';
-import Select from 'react-select';
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import { addDays, addWeeks } from '@progress/kendo-date-math';
+import { addDays } from '@progress/kendo-date-math';
+import formatDate from '../utils/DateFormatter';
 
 function FoodForm(props) {
   const [input, setInput] = useState(props.edit ? props.edit.value : '');
-  const [select, setSelect] = useState(props.edit ? props.edit.category : null);
+  const [select, setSelect] = useState(props.edit ? props.edit.category : 1);
   const [time, setTime] = useState(props.edit ? props.edit.time : '');
 
-  const options = [
-    { category: 'fresh-eggs', label: 'Fresh Eggs' },
-    { category: 'fresh-milk', label: 'Fresh Milk (after opening)' },
-    { category: 'bacon', label: 'Bacon' },
-    { category: 'fresh-red-meat', label: 'Fresh Red Meat' },
-    { category: 'fresh-poultry', label: 'Fresh Poultry' },
-    { category: 'seafood', label: 'Seafood' },
-    { category: 'vegetables', label: 'Vegetables' },
-    { category: 'cooked-shellfish', label: 'Cooked Shellfish' },
-    { category: 'lean-fish', label: 'Lean Fish' },
-    { category: 'fatty-fish', label: 'Fatty Fish' },
-    { category: 'cooked-fish', label: 'Cooked Fish' },
-    { category: 'salad', label: 'Salad' },
-    { category: 'soup-and-stews', label: 'Soup and stews' },
-    { category: 'chicken-nuggets-and-patties', label: 'Chicken Nuggets and Patties' },
-    { category: 'pizza', label: 'Pizza' }
-  ];
-
-  const getRecommendTime = (category, date) => {
-    switch(category) {
-      case 'fresh-eggs':
-        return addWeeks(date, 5);
-      case 'fresh-milk':
-        return addDays(date, 3);
-      case 'bacon':
-        return addDays(date, 7);
-      case 'fresh-red-meat':
-        return addDays(date, 5);    
-      case 'fresh-poultry':
-        return addDays(date, 2);
-      case 'seafood':
-        return addDays(date, 2);
-      case 'vegetables':
-         return addDays(date, 7);
-      case 'cooked-shellfish':
-          return addDays(date, 4);    
-      case 'lean-fish':
-        return addDays(date, 2);
-      case 'fatty-fish':
-        return addDays(date, 2);
-      case 'cooked-fish':
-        return addDays(date, 4);    
-      case 'salad':
-        return addDays(date, 5);
-      case 'soup-and-stews':
-          return addDays(date, 4);
-      case 'chicken-nuggets-and-patties':
-          return addDays(date, 2);
-      case 'pizza':
-        return addDays(date, 4);
-      default:
-        return date;      
-    }
+  const getRecommendTime = date => {
+    return addDays(date, props.categories[select-1].maxStoreDays);
   };
 
   const handleInputChange = e => {
@@ -72,12 +21,12 @@ function FoodForm(props) {
 
   const handleSelectChange = e => {
     if (e !== null) {
-      setSelect(e);
+      setSelect(e.target.value);
 
       let today = new Date();
-      let recommendDate = getRecommendTime(e.category, today);
-      const date=recommendDate.getDate() + "/"+ parseInt(recommendDate.getMonth()+1) +"/"+recommendDate.getFullYear();
-      setTime(date);
+      let recommendDate = getRecommendTime(today);
+      // const date=recommendDate.getDate() + "/"+ parseInt(recommendDate.getMonth()+1) +"/"+recommendDate.getFullYear();
+      setTime(formatDate(recommendDate));
     }
   }
 
@@ -86,12 +35,16 @@ function FoodForm(props) {
     
     props.onSubmit({
       description: input,
-      category: select,
+      category: {
+        id:props.categories[select-1].id,
+        description: props.categories[select-1].description,
+        maxStoreDays: props.categories[select-1].maxStoreDays
+      },
       startStoreDate: time
     });
 
     setInput('');
-    setSelect(null);
+    setSelect(1);
     setTime('');
   };
 
@@ -108,16 +61,14 @@ function FoodForm(props) {
           onChange={handleInputChange} />
         </Col>
         <Col md={{span: 5}}>
-          <Select
-            className="basic-single"
-            classNamePrefix="select"
-            defaultValue={null}
-            placeholder="Select food category..."
-            isSearchable={true}
+          <Form.Select
             value={select}
             onChange={handleSelectChange}
-            options={options}
-          />
+          >
+            {props.categories.map(category => (
+              <option key={category.id} value={category.id}>{category.description}</option>
+              ))}
+          </Form.Select>
         </Col>
         <Col>
           <Button variant="primary" type="submit">Add</Button>
