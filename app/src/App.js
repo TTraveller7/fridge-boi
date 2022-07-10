@@ -11,6 +11,7 @@ import Auth from "./pages/Auth"
 
 
 function App() {
+<<<<<<< Updated upstream
   return (
     <Container>
       <Row>
@@ -19,6 +20,41 @@ function App() {
       <Row>
         <Col md={{span: 8, offset: 2}}>
           <FoodList />
+=======
+  const [foods, setFoods] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [input, setInput] = useState('');
+
+  useEffect(() => {
+    setLoading(true);
+
+    const getData = async () => {
+      try {
+        const response = await http.get('/foods');
+        console.log(response.data._embedded.foodList);
+        setFoods(response.data._embedded.foodList);
+      } catch (err) {
+        console.log(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getData();
+  }, []);
+
+  const setFilter = textInput => {
+    setInput(textInput);
+  }
+
+  return (
+    <Container>
+      <Row>
+        <SearchBar onChange={setFilter}/>
+      </Row>
+      <Row>
+        <Col md={{span: 8, offset: 2}}>
+          <FoodList input={input}/>
+>>>>>>> Stashed changes
         </Col>
       </Row>
     </Container>

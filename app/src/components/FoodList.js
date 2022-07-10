@@ -4,7 +4,7 @@ import FoodForm from './FoodForm';
 import Row from 'react-bootstrap/Row'
 import http from '../http-common';
 
-function FoodList() {
+function FoodList(props) {
   const [foods, setFoods] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -88,6 +88,19 @@ function FoodList() {
     
   };
 
+<<<<<<< Updated upstream
+=======
+  const filteredFood = foods.filter(food => {
+      //if no input the return the original
+      if (props.input === '') {
+        return food;
+    }
+    //return the item which contains the user input
+    else {
+        return food.text.toLowerCase().includes(props.input)
+    }
+  })
+>>>>>>> Stashed changes
 
   return ( 
     <React.Fragment>
@@ -97,7 +110,7 @@ function FoodList() {
       </Row>
       <Row className="mt-4">
         <Food 
-          foods={foods}
+          foods={filteredFood}
           finishFood={finishFood}
           removeFood={removeFood}
           updateFood={updateFood}
