@@ -1,39 +1,32 @@
 import React, {useState} from 'react';
 import Navbar from 'react-bootstrap/Navbar'
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import { Col } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 
-function SearchBar({ data }) {
-const [filteredData, setFilteredData] = useState([]);
-const [wordEntered, setWordEntered] = useState("");
+function SearchBar(props) {
 
-const handleFilter = (event) => {
-  const searchWord = event.target.value;
-  setWordEntered(searchWord);
-  const newFilter = data.filter((value) => {
-    return value.text.toLowerCase().includes(searchWord.toLowerCase());
-  });
+const handleChange = e => {
+  props.onChange(e.target.value);
+}
 
-  if (searchWord === "") {
-    setFilteredData([]);
-  } else {
-    setFilteredData(newFilter);
-  }
-};
+const handleSubmit = e => {
+  e.preventDefault();
+
+}
 
   return (
     <Navbar bg="light" expand="lg">
       <Container>
         <Navbar.Brand href="#">fridge-boi</Navbar.Brand>
         
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Control
             type="search"
             placeholder="Search"
             className="me-2"
             aria-label="Search"
+            onChange={handleChange}
+            
           />
         </Form>
       </Container>
