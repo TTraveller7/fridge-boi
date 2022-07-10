@@ -26,15 +26,12 @@ function FoodList() {
   }, []);
 
   const addFood = food => {
-    console.log(food);
-
     if(!food.text || /^\s*$/.test(food.text)) {
       return; 
     }
-
-    const newFoods = [food, ...foods];
-
-    setFoods(newFoods);
+    
+    http.post('/foods', food)
+      .then(response => console.log(response));
   };
 
   const removeFood = id => {

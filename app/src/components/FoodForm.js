@@ -8,7 +8,7 @@ import { addDays, addWeeks } from '@progress/kendo-date-math';
 
 function FoodForm(props) {
   const [input, setInput] = useState(props.edit ? props.edit.value : '');
-  const [select, setSelect] = useState(props.edit ? props.edit.category : '');
+  const [select, setSelect] = useState(props.edit ? props.edit.category : null);
   const [time, setTime] = useState(props.edit ? props.edit.time : '');
 
   const options = [
@@ -72,7 +72,7 @@ function FoodForm(props) {
 
   const handleSelectChange = e => {
     if (e !== null) {
-      setSelect(e.label);
+      setSelect(e);
 
       let today = new Date();
       let recommendDate = getRecommendTime(e.category, today);
@@ -91,10 +91,12 @@ function FoodForm(props) {
     });
 
     setInput('');
+    setSelect(null);
+    setTime('');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='food-form' onSubmit={handleSubmit}>
       <Row>
         <Col md={{span: 5}}>
           <Form.Control 
@@ -109,9 +111,10 @@ function FoodForm(props) {
           <Select
             className="basic-single"
             classNamePrefix="select"
+            defaultValue={null}
             placeholder="Select food category..."
-            isClearable={true}
             isSearchable={true}
+            value={select}
             onChange={handleSelectChange}
             options={options}
           />

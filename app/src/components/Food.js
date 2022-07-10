@@ -11,7 +11,7 @@ function Food({foods, finishFood, removeFood, updateFood}) {
   const [edit, setEdit] = useState({
     id: null,
     value: '',
-    category: '',
+    category: null,
     time: ''
   });
 
@@ -20,7 +20,7 @@ function Food({foods, finishFood, removeFood, updateFood}) {
     setEdit({
       id: null,
       value: '',
-      category: '',
+      category: null,
       time: ''
     })
   }
@@ -73,7 +73,8 @@ function Food({foods, finishFood, removeFood, updateFood}) {
             <td className='icon'>
               <RiCloseCircleLine
               onClick={() => removeFood(food.id)}
-              className='delete-icon' />
+              className='delete-icon'
+              />
               <TiEdit 
               onClick={() => setEdit({ id: food.id, value:  food.text, category: food.category, time: food.time })}
               className='edit-icon'/>
@@ -84,9 +85,6 @@ function Food({foods, finishFood, removeFood, updateFood}) {
 
     </Table>
   )
-  
-  
-
 }
 
 export default Food;
