@@ -1,12 +1,33 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Food from './Food';
 import FoodForm from './FoodForm';
 import Row from 'react-bootstrap/Row'
+import http from '../http-common';
 
 function FoodList() {
   const [foods, setFoods] = useState([]);
+  const [loading, setLoading] = useState(false);
+  
+  useEffect(() => {
+    setLoading(true);
+
+    const getData = async () => {
+      try {
+        const response = await http.get('/foods');
+        console.log(response.data._embedded.foodList);
+        setFoods(response.data._embedded.foodList);
+      } catch (err) {
+        console.log(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getData();
+  }, []);
 
   const addFood = food => {
+    console.log(food);
+
     if(!food.text || /^\s*$/.test(food.text)) {
       return; 
     }
@@ -41,6 +62,7 @@ function FoodList() {
     setFoods(updatedFoods);
     
   };
+
 
   return ( 
     <React.Fragment>

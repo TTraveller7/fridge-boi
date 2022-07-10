@@ -3,8 +3,11 @@ import FoodForm from './FoodForm';
 import {RiCloseCircleLine} from 'react-icons/ri';
 import {TiEdit} from 'react-icons/ti';
 import Table from 'react-bootstrap/Table'
+import { addDays } from '@progress/kendo-date-math';
 
 function Food({foods, finishFood, removeFood, updateFood}) {
+  console.log(foods);
+
   const [edit, setEdit] = useState({
     id: null,
     value: '',
@@ -22,6 +25,25 @@ function Food({foods, finishFood, removeFood, updateFood}) {
     })
   }
 
+  const formatDate = date => {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+  const getBestBeforeDate = food => {
+    const startDate = new Date(food.startStoreDate);
+    return food.category.maxStoreDays && formatDate(addDays(startDate, food.category.maxStoreDays));
+  }
+
   if (edit.id) {
     return <FoodForm edit={edit} onSubmit={submitUpdate} />;
   }
@@ -37,16 +59,16 @@ function Food({foods, finishFood, removeFood, updateFood}) {
         </tr>
       </thead>
       <tbody>
-        {foods.map((food, index) => (
-          <tr key={index}>
+        {foods.map(food => (
+          <tr key={food.id}>
             <td key={food.id} onClick={() => finishFood(food.id)}>
-              {food.text}
+              {food.description}
             </td>
             <td>
-              {food.category}
+              {food.category.description}
             </td>
             <td>
-              {food.time}
+              {getBestBeforeDate(food)}
             </td>
             <td className='icon'>
               <RiCloseCircleLine

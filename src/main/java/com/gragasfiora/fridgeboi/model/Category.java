@@ -14,7 +14,7 @@ public class Category {
     private String description;
 
     @Column
-    private int maxStoreDays;
+    private Integer maxStoreDays;
 
     public Category() {
 
@@ -45,11 +45,11 @@ public class Category {
         this.description = description;
     }
 
-    public int getMaxStoreDays() {
+    public Integer getMaxStoreDays() {
         return maxStoreDays;
     }
 
-    public void setMaxStoreDays(int maxStoreDays) {
+    public void setMaxStoreDays(Integer maxStoreDays) {
         this.maxStoreDays = maxStoreDays;
     }
 }

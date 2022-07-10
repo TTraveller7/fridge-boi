@@ -68,9 +68,6 @@ function FoodForm(props) {
 
   const handleInputChange = e => {
     setInput(e.target.value);
-
-
-
   };
 
   const handleSelectChange = e => {
@@ -88,10 +85,9 @@ function FoodForm(props) {
     e.preventDefault();
     
     props.onSubmit({
-      id: Math.floor(Math.random() * 10000),
-      text: input,
+      description: input,
       category: select,
-      time: time
+      startStoreDate: time
     });
 
     setInput('');
@@ -102,10 +98,10 @@ function FoodForm(props) {
       <Row>
         <Col md={{span: 5}}>
           <Form.Control 
-          type="text" 
+          type="description" 
           placeholder="Add a food" 
           value={input}
-          name='text'
+          name='description'
           className='food-input'
           onChange={handleInputChange} />
         </Col>
