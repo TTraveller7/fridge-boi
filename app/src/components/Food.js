@@ -8,6 +8,7 @@ function Food({foods, finishFood, removeFood, updateFood}) {
   const [edit, setEdit] = useState({
     id: null,
     value: '',
+    category: '',
     time: ''
   });
 
@@ -16,6 +17,7 @@ function Food({foods, finishFood, removeFood, updateFood}) {
     setEdit({
       id: null,
       value: '',
+      category: '',
       time: ''
     })
   }
@@ -29,6 +31,7 @@ function Food({foods, finishFood, removeFood, updateFood}) {
       <thead>
         <tr>
           <th className='ml-3' scope="col">Description</th>
+          <th scope="col">Category</th>
           <th scope="col">Best Before Date</th>
           <th scope="col"></th>
         </tr>
@@ -40,6 +43,9 @@ function Food({foods, finishFood, removeFood, updateFood}) {
               {food.text}
             </td>
             <td>
+              {food.category}
+            </td>
+            <td>
               {food.time}
             </td>
             <td className='icon'>
@@ -47,7 +53,7 @@ function Food({foods, finishFood, removeFood, updateFood}) {
               onClick={() => removeFood(food.id)}
               className='delete-icon' />
               <TiEdit 
-              onClick={() => setEdit({ id: food.id, value:  food.text, time: food.time })}
+              onClick={() => setEdit({ id: food.id, value:  food.text, category: food.category, time: food.time })}
               className='edit-icon'/>
             </td>
           </tr>
