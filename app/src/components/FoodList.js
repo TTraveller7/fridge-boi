@@ -88,8 +88,6 @@ function FoodList(props) {
     
   };
 
-<<<<<<< Updated upstream
-=======
   const filteredFood = foods.filter(food => {
       //if no input the return the original
       if (props.input === '') {
@@ -97,10 +95,9 @@ function FoodList(props) {
     }
     //return the item which contains the user input
     else {
-        return food.text.toLowerCase().includes(props.input)
+        return food.description.toLowerCase().includes(props.input)
     }
   })
->>>>>>> Stashed changes
 
   return ( 
     <React.Fragment>
